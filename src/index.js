@@ -1,6 +1,5 @@
-// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'C:/Users/93984/coding/learn_react_code/src/react/packages/react/src/React';
+import * as ReactDOM from 'C:/Users/93984/coding/learn_react_code/src/react/packages/react-dom/src/client/ReactDOM';
 
 // 调试组件
 function DebugApp() {
@@ -41,3 +40,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<DebugApp />);
 
 console.log('🚀 React 应用已启动');
+console.log('react-dom路径:', require.resolve('react-dom'));
+const Text = () => (
+    <div id="div" class="daw">
+        <span>1212</span>
+    </div>
+);
+console.log(Text());

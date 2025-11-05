@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug React App",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3001",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/*",
+        "webpack:///src/*": "${webRoot}/*",
+        "webpack:///../src/react/*": "${webRoot}/react/*",
+        "webpack:///react/*": "C:/Users/93984/coding/learn_react_code/src/react/packages/react/*",
+        "webpack:///react-dom/*": "C:/Users/93984/coding/learn_react_code/src/react/packages/react-dom/*",
+        "webpack:///react-reconciler/*": "C:/Users/93984/coding/learn_react_code/src/react/packages/react-reconciler/*",
+        "webpack:///shared/*": "C:/Users/93984/coding/learn_react_code/src/react/packages/shared/*",
+        "webpack:///scheduler/*": "C:/Users/93984/coding/learn_react_code/src/react/packages/scheduler/*"
+      },
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/AppData/Local/Microsoft/TypeScript/**"
+      ]
+    }
+  ]
+}

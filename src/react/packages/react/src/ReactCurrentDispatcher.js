@@ -1,5 +1,5 @@
 const ReactCurrentDispatcher = {
-  current: null,
+    current: null,
 };
 
 export default ReactCurrentDispatcher;
