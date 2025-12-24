@@ -7,7 +7,7 @@
  * @flow
  */
 
-import {enableCreateEventHandleAPI} from 'shared/ReactFeatureFlags';
+import { enableCreateEventHandleAPI } from 'shared/ReactFeatureFlags';
 
 export type Flags = number;
 
@@ -16,9 +16,9 @@ export const NoFlags = /*                      */ 0b00000000000000000000000000;
 export const PerformedWork = /*                */ 0b00000000000000000000000001;
 
 // You can change the rest (and add more).
-export const Placement = /*                    */ 0b00000000000000000000000010;
-export const Update = /*                       */ 0b00000000000000000000000100;
-export const Deletion = /*                     */ 0b00000000000000000000001000;
+export const Placement = /*                    */ 0b00000000000000000000000010; // 需要插入DOM
+export const Update = /*                       */ 0b00000000000000000000000100; // 需要更新
+export const Deletion = /*                     */ 0b00000000000000000000001000; // 需要删除
 export const ChildDeletion = /*                */ 0b00000000000000000000010000;
 export const ContentReset = /*                 */ 0b00000000000000000000100000;
 export const Callback = /*                     */ 0b00000000000000000001000000;
@@ -26,13 +26,12 @@ export const DidCapture = /*                   */ 0b00000000000000000010000000;
 export const ForceClientRender = /*            */ 0b00000000000000000100000000;
 export const Ref = /*                          */ 0b00000000000000001000000000;
 export const Snapshot = /*                     */ 0b00000000000000010000000000;
-export const Passive = /*                      */ 0b00000000000000100000000000;
+export const Passive = /*                      */ 0b00000000000000100000000000; // 有useEffect副作用
 export const Hydrating = /*                    */ 0b00000000000001000000000000;
 export const Visibility = /*                   */ 0b00000000000010000000000000;
 export const StoreConsistency = /*             */ 0b00000000000100000000000000;
 
-export const LifecycleEffectMask =
-  Passive | Update | Callback | Ref | Snapshot | StoreConsistency;
+export const LifecycleEffectMask = Passive | Update | Callback | Ref | Snapshot | StoreConsistency;
 
 // Union of all commit flags (flags with the lifetime of a particular commit)
 export const HostEffectMask = /*               */ 0b00000000000111111111111111;
@@ -64,26 +63,19 @@ export const MountPassiveDev = /*              */ 0b10000000000000000000000000;
 // don't contain effects, by checking subtreeFlags.
 
 export const BeforeMutationMask =
-  // TODO: Remove Update flag from before mutation phase by re-landing Visibility
-  // flag logic (see #20043)
-  Update |
-  Snapshot |
-  (enableCreateEventHandleAPI
-    ? // createEventHandle needs to visit deleted and hidden trees to
-      // fire beforeblur
-      // TODO: Only need to visit Deletions during BeforeMutation phase if an
-      // element is focused.
-      ChildDeletion | Visibility
-    : 0);
+    // TODO: Remove Update flag from before mutation phase by re-landing Visibility
+    // flag logic (see #20043)
+    Update |
+    Snapshot |
+    (enableCreateEventHandleAPI
+        ? // createEventHandle needs to visit deleted and hidden trees to
+          // fire beforeblur
+          // TODO: Only need to visit Deletions during BeforeMutation phase if an
+          // element is focused.
+          ChildDeletion | Visibility
+        : 0);
 
-export const MutationMask =
-  Placement |
-  Update |
-  ChildDeletion |
-  ContentReset |
-  Ref |
-  Hydrating |
-  Visibility;
+export const MutationMask = Placement | Update | ChildDeletion | ContentReset | Ref | Hydrating | Visibility;
 export const LayoutMask = Update | Callback | Ref | Visibility;
 
 // TODO: Split into PassiveMountMask and PassiveUnmountMask
